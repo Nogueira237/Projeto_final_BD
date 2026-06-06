@@ -2,6 +2,7 @@ package academia.app;
 
 import academia.dao.*;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class menuSelect {
@@ -10,42 +11,49 @@ public class menuSelect {
 
         int opcao;
 
-        System.out.println("\n===== MENU SELECT =====");
-        System.out.println("1 - Aluno");
-        System.out.println("2 - Plano");
-        System.out.println("3 - Treino");
-        System.out.println("4 - Instrutor");
-        System.out.println("5 - Aula");
-        System.out.println("6 - Pagamento");
-        System.out.println("7 - Aluno_has_Aula");
+        try {
+            System.out.println("\n===== MENU SELECT =====");
+            System.out.println("1 - Aluno");
+            System.out.println("2 - Plano");
+            System.out.println("3 - Treino");
+            System.out.println("4 - Instrutor");
+            System.out.println("5 - Aula");
+            System.out.println("6 - Pagamento");
+            System.out.println("7 - Aluno_has_Aula");
 
-        opcao = scanner.nextInt();
-        scanner.nextLine();
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+        } catch (InputMismatchException e) {
+            System.out.println("Opção inválida.");
+            scanner.nextLine();
+            return;
+        }
 
         switch (opcao) {
 
-            // ================= ALUNO (ESPECIAL) =================
             case 1 -> menuAluno(scanner);
-
-            // ================= PLANO =================
             case 2 -> menuPlano(scanner);
-
-            // ================= TREINO =================
             case 3 -> menuTreino(scanner);
-
-            // ================= INSTRUTOR =================
             case 4 -> menuInstrutor(scanner);
-
-            // ================= AULA =================
             case 5 -> menuAula(scanner);
-
-            // ================= PAGAMENTO =================
             case 6 -> menuPagamento(scanner);
-
-            // ================= RELAÇÃO =================
             case 7 -> menuRelacao(scanner);
 
             default -> System.out.println("Opção inválida.");
+        }
+    }
+
+    // ================= UTIL =================
+    private int lerInt(Scanner scanner, String msg) {
+        while (true) {
+            try {
+                System.out.print(msg);
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Digite um número válido.");
+                scanner.nextLine();
+            }
         }
     }
 
@@ -54,155 +62,178 @@ public class menuSelect {
     // =====================================================
     private void menuAluno(Scanner scanner) {
 
-        AlunoDAO dao = new AlunoDAO();
+        try {
+            AlunoDAO dao = new AlunoDAO();
 
-        System.out.println("\n1 - Buscar por ID");
-        System.out.println("2 - Mostrar todos");
-        System.out.println("3 - Relatório alunos + pagamentos (JOIN)");
-        System.out.println("4 - Relatório alunos + aulas (JOIN)");
-        System.out.println("5 - Relatório completo (Aluno + Pagamento + Plano)");
+            System.out.println("\n1 - Buscar por ID");
+            System.out.println("2 - Mostrar todos");
+            System.out.println("3 - Relatório alunos + pagamentos (JOIN)");
+            System.out.println("4 - Relatório alunos + aulas (JOIN)");
+            System.out.println("5 - Relatório completo");
 
-        int op = scanner.nextInt();
-        scanner.nextLine();
+            int op = lerInt(scanner, "Escolha: ");
 
-        switch (op) {
+            switch (op) {
 
-            case 1 -> {
-                System.out.print("ID: ");
-                int id = scanner.nextInt();
-                System.out.println(dao.selectById(id));
+                case 1 -> {
+                    int id = lerInt(scanner, "ID: ");
+                    System.out.println(dao.selectById(id));
+                }
+
+                case 2 -> dao.selectAluno().forEach(System.out::println);
+
+                case 3 -> dao.relatorioAlunoPagamento();
+
+                case 4 -> dao.relatorioAlunoAula();
+
+                case 5 -> dao.relatorioCompletoAluno();
+
+                default -> System.out.println("Opção inválida.");
             }
 
-            case 2 -> {
-                dao.selectAluno().forEach(System.out::println);
-            }
-
-            case 3 -> {
-                dao.relatorioAlunoPagamento();
-            }
-
-            case 4 -> {
-                dao.relatorioAlunoAula();
-            }
-
-            case 5 -> {
-                dao.relatorioCompletoAluno();
-            }
+        } catch (Exception e) {
+            System.out.println("Erro no menu aluno: " + e.getMessage());
         }
     }
 
     // =====================================================
     private void menuPlano(Scanner scanner) {
 
-        PlanoDAO dao = new PlanoDAO();
+        try {
+            PlanoDAO dao = new PlanoDAO();
 
-        System.out.println("\n1 - Buscar por ID");
-        System.out.println("2 - Mostrar todos");
+            System.out.println("\n1 - Buscar por ID");
+            System.out.println("2 - Mostrar todos");
 
-        int op = scanner.nextInt();
+            int op = lerInt(scanner, "Escolha: ");
 
-        if (op == 1) {
-            System.out.print("ID: ");
-            System.out.println(dao.selectById(scanner.nextInt()));
-        } else {
-            dao.selectPlano().forEach(System.out::println);
+            if (op == 1) {
+                int id = lerInt(scanner, "ID: ");
+                System.out.println(dao.selectById(id));
+            } else {
+                dao.selectPlano().forEach(System.out::println);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro no menu plano.");
         }
     }
 
     // =====================================================
     private void menuTreino(Scanner scanner) {
 
-        TreinoDAO dao = new TreinoDAO();
+        try {
+            TreinoDAO dao = new TreinoDAO();
 
-        System.out.println("\n1 - Buscar por ID");
-        System.out.println("2 - Mostrar todos");
+            System.out.println("\n1 - Buscar por ID");
+            System.out.println("2 - Mostrar todos");
 
-        int op = scanner.nextInt();
+            int op = lerInt(scanner, "Escolha: ");
 
-        if (op == 1) {
-            System.out.print("ID: ");
-            System.out.println(dao.selectById(scanner.nextInt()));
-        } else {
-            dao.selectTreino().forEach(System.out::println);
+            if (op == 1) {
+                int id = lerInt(scanner, "ID: ");
+                System.out.println(dao.selectById(id));
+            } else {
+                dao.selectTreino().forEach(System.out::println);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro no menu treino.");
         }
     }
 
     // =====================================================
     private void menuInstrutor(Scanner scanner) {
 
-        InstrutorDAO dao = new InstrutorDAO();
+        try {
+            InstrutorDAO dao = new InstrutorDAO();
 
-        System.out.println("\n1 - Buscar por ID");
-        System.out.println("2 - Mostrar todos");
+            System.out.println("\n1 - Buscar por ID");
+            System.out.println("2 - Mostrar todos");
 
-        int op = scanner.nextInt();
+            int op = lerInt(scanner, "Escolha: ");
 
-        if (op == 1) {
-            System.out.print("ID: ");
-            System.out.println(dao.selectById(scanner.nextInt()));
-        } else {
-            dao.selectInstrutor().forEach(System.out::println);
+            if (op == 1) {
+                int id = lerInt(scanner, "ID: ");
+                System.out.println(dao.selectById(id));
+            } else {
+                dao.selectInstrutor().forEach(System.out::println);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro no menu instrutor.");
         }
     }
 
     // =====================================================
     private void menuAula(Scanner scanner) {
 
-        AulaDAO dao = new AulaDAO();
+        try {
+            AulaDAO dao = new AulaDAO();
 
-        System.out.println("\n1 - Buscar por ID");
-        System.out.println("2 - Mostrar todos");
+            System.out.println("\n1 - Buscar por ID");
+            System.out.println("2 - Mostrar todos");
 
-        int op = scanner.nextInt();
+            int op = lerInt(scanner, "Escolha: ");
 
-        if (op == 1) {
-            System.out.print("ID: ");
-            System.out.println(dao.selectById(scanner.nextInt()));
-        } else {
-            dao.selectAula().forEach(System.out::println);
+            if (op == 1) {
+                int id = lerInt(scanner, "ID: ");
+                System.out.println(dao.selectById(id));
+            } else {
+                dao.selectAula().forEach(System.out::println);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro no menu aula.");
         }
     }
 
     // =====================================================
     private void menuPagamento(Scanner scanner) {
 
-        PagamentoDAO dao = new PagamentoDAO();
+        try {
+            PagamentoDAO dao = new PagamentoDAO();
 
-        System.out.println("\n1 - Buscar por ID");
-        System.out.println("2 - Mostrar todos");
+            System.out.println("\n1 - Buscar por ID");
+            System.out.println("2 - Mostrar todos");
 
-        int op = scanner.nextInt();
+            int op = lerInt(scanner, "Escolha: ");
 
-        if (op == 1) {
-            System.out.print("ID: ");
-            System.out.println(dao.selectById(scanner.nextInt()));
-        } else {
-            dao.selectPagamento().forEach(System.out::println);
+            if (op == 1) {
+                int id = lerInt(scanner, "ID: ");
+                System.out.println(dao.selectById(id));
+            } else {
+                dao.selectPagamento().forEach(System.out::println);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro no menu pagamento.");
         }
     }
 
     // =====================================================
     private void menuRelacao(Scanner scanner) {
 
-        AlunoHasAulaDAO dao = new AlunoHasAulaDAO();
+        try {
+            AlunoHasAulaDAO dao = new AlunoHasAulaDAO();
 
-        System.out.println("\n1 - Buscar por aluno + aula");
-        System.out.println("2 - Mostrar todas relações");
+            System.out.println("\n1 - Buscar por aluno + aula");
+            System.out.println("2 - Mostrar todas relações");
 
-        int op = scanner.nextInt();
+            int op = lerInt(scanner, "Escolha: ");
 
-        if (op == 1) {
+            if (op == 1) {
+                int aluno = lerInt(scanner, "ID aluno: ");
+                int aula = lerInt(scanner, "ID aula: ");
 
-            System.out.print("ID aluno: ");
-            int aluno = scanner.nextInt();
+                System.out.println(dao.selectByIds(aluno, aula));
 
-            System.out.print("ID aula: ");
-            int aula = scanner.nextInt();
+            } else {
+                dao.selectRelacoes().forEach(System.out::println);
+            }
 
-            System.out.println(dao.selectByIds(aluno, aula));
-
-        } else {
-            dao.selectRelacoes().forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println("Erro no menu relação.");
         }
     }
 }

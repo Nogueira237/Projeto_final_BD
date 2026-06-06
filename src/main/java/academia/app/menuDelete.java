@@ -2,6 +2,7 @@ package academia.app;
 
 import academia.dao.*;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class menuDelete {
@@ -10,118 +11,153 @@ public class menuDelete {
 
         int opcao;
 
-        System.out.println("\n===== MENU DELETE =====");
-        System.out.println("1 - Aluno");
-        System.out.println("2 - Plano");
-        System.out.println("3 - Treino");
-        System.out.println("4 - Instrutor");
-        System.out.println("5 - Aula");
-        System.out.println("6 - Pagamento");
-        System.out.println("7 - AlunoHasAula");
+        try {
+            System.out.println("\n===== MENU DELETE =====");
+            System.out.println("1 - Aluno");
+            System.out.println("2 - Plano");
+            System.out.println("3 - Treino");
+            System.out.println("4 - Instrutor");
+            System.out.println("5 - Aula");
+            System.out.println("6 - Pagamento");
+            System.out.println("7 - AlunoHasAula");
 
-        opcao = scanner.nextInt();
-        scanner.nextLine();
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+        } catch (InputMismatchException e) {
+            System.out.println("Opção inválida.");
+            scanner.nextLine();
+            return;
+        }
 
         switch (opcao) {
 
             // ================= ALUNO =================
             case 1 -> {
-                AlunoDAO dao = new AlunoDAO();
+                try {
+                    AlunoDAO dao = new AlunoDAO();
 
-                System.out.print("ID do aluno: ");
-                int id = scanner.nextInt();
+                    System.out.print("ID do aluno: ");
+                    int id = scanner.nextInt();
 
-                if (dao.deleteAluno(id)) {
-                    System.out.println("Aluno removido com sucesso!");
-                } else {
-                    System.out.println("Erro ao remover aluno.");
+                    System.out.println(dao.deleteAluno(id)
+                            ? "Aluno removido com sucesso!"
+                            : "Erro ao remover aluno.");
+
+                } catch (InputMismatchException e) {
+                    System.out.println("ID inválido.");
+                    scanner.nextLine();
                 }
             }
 
             // ================= PLANO =================
             case 2 -> {
-                PlanoDAO dao = new PlanoDAO();
+                try {
+                    PlanoDAO dao = new PlanoDAO();
 
-                System.out.print("ID do plano: ");
-                int id = scanner.nextInt();
+                    System.out.print("ID do plano: ");
+                    int id = scanner.nextInt();
 
-                if (dao.deletePlano(id)) {
-                    System.out.println("Plano removido com sucesso!");
-                } else {
-                    System.out.println("Erro ao remover plano.");
+                    System.out.println(dao.deletePlano(id)
+                            ? "Plano removido com sucesso!"
+                            : "Erro ao remover plano.");
+
+                } catch (InputMismatchException e) {
+                    System.out.println("ID inválido.");
+                    scanner.nextLine();
                 }
             }
 
             // ================= TREINO =================
             case 3 -> {
-                TreinoDAO dao = new TreinoDAO();
+                try {
+                    TreinoDAO dao = new TreinoDAO();
 
-                System.out.print("ID do treino: ");
-                int id = scanner.nextInt();
+                    System.out.print("ID do treino: ");
+                    int id = scanner.nextInt();
 
-                if (dao.deleteTreino(id)) {
-                    System.out.println("Treino removido com sucesso!");
-                } else {
-                    System.out.println("Erro ao remover treino.");
+                    System.out.println(dao.deleteTreino(id)
+                            ? "Treino removido com sucesso!"
+                            : "Erro ao remover treino.");
+
+                } catch (InputMismatchException e) {
+                    System.out.println("ID inválido.");
+                    scanner.nextLine();
                 }
             }
 
             // ================= INSTRUTOR =================
             case 4 -> {
-                InstrutorDAO dao = new InstrutorDAO();
+                try {
+                    InstrutorDAO dao = new InstrutorDAO();
 
-                System.out.print("ID do instrutor: ");
-                int id = scanner.nextInt();
+                    System.out.print("ID do instrutor: ");
+                    int id = scanner.nextInt();
 
-                if (dao.deleteInstrutor(id)) {
-                    System.out.println("Instrutor removido com sucesso!");
-                } else {
-                    System.out.println("Erro ao remover instrutor.");
+                    System.out.println(dao.deleteInstrutor(id)
+                            ? "Instrutor removido com sucesso!"
+                            : "Erro ao remover instrutor.");
+
+                } catch (InputMismatchException e) {
+                    System.out.println("ID inválido.");
+                    scanner.nextLine();
                 }
             }
 
             // ================= AULA =================
             case 5 -> {
-                AulaDAO dao = new AulaDAO();
+                try {
+                    AulaDAO dao = new AulaDAO();
 
-                System.out.print("ID da aula: ");
-                int id = scanner.nextInt();
+                    System.out.print("ID da aula: ");
+                    int id = scanner.nextInt();
 
-                if (dao.deleteAula(id)) {
-                    System.out.println("Aula removida com sucesso!");
-                } else {
-                    System.out.println("Erro ao remover aula.");
+                    System.out.println(dao.deleteAula(id)
+                            ? "Aula removida com sucesso!"
+                            : "Erro ao remover aula.");
+
+                } catch (InputMismatchException e) {
+                    System.out.println("ID inválido.");
+                    scanner.nextLine();
                 }
             }
 
             // ================= PAGAMENTO =================
             case 6 -> {
-                PagamentoDAO dao = new PagamentoDAO();
+                try {
+                    PagamentoDAO dao = new PagamentoDAO();
 
-                System.out.print("ID do pagamento: ");
-                int id = scanner.nextInt();
+                    System.out.print("ID do pagamento: ");
+                    int id = scanner.nextInt();
 
-                if (dao.deletePagamento(id)) {
-                    System.out.println("Pagamento removido com sucesso!");
-                } else {
-                    System.out.println("Erro ao remover pagamento.");
+                    System.out.println(dao.deletePagamento(id)
+                            ? "Pagamento removido com sucesso!"
+                            : "Erro ao remover pagamento.");
+
+                } catch (InputMismatchException e) {
+                    System.out.println("ID inválido.");
+                    scanner.nextLine();
                 }
             }
 
-            // ================= RELAÇÃO (N:N) =================
+            // ================= RELAÇÃO =================
             case 7 -> {
-                AlunoHasAulaDAO dao = new AlunoHasAulaDAO();
+                try {
+                    AlunoHasAulaDAO dao = new AlunoHasAulaDAO();
 
-                System.out.print("ID aluno: ");
-                int idAluno = scanner.nextInt();
+                    System.out.print("ID aluno: ");
+                    int idAluno = scanner.nextInt();
 
-                System.out.print("ID aula: ");
-                int idAula = scanner.nextInt();
+                    System.out.print("ID aula: ");
+                    int idAula = scanner.nextInt();
 
-                if (dao.deleteRelacao(idAluno, idAula)) {
-                    System.out.println("Vínculo removido com sucesso!");
-                } else {
-                    System.out.println("Erro ao remover vínculo.");
+                    System.out.println(dao.deleteRelacao(idAluno, idAula)
+                            ? "Vínculo removido com sucesso!"
+                            : "Erro ao remover vínculo.");
+
+                } catch (InputMismatchException e) {
+                    System.out.println("IDs inválidos.");
+                    scanner.nextLine();
                 }
             }
 
