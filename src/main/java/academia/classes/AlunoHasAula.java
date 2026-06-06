@@ -27,4 +27,12 @@ public class AlunoHasAula {
     public void setAula_id_aula(int aula_id_aula) {
         Aula_id_aula = aula_id_aula;
     }
+
+    @Override
+    public String toString() {
+        return "AlunoHasAula{" +
+                "alunoId=" + Aluno_id_aluno +
+                ", aulaId=" + Aula_id_aula +
+                '}';
+    }
 };

@@ -43,4 +43,13 @@ public class Treino {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        return "Treino{" +
+                "id=" + id_treino +
+                ", descricao='" + descricao + '\'' +
+                ", nivel='" + nivel + '\'' +
+                '}';
+    }
 };

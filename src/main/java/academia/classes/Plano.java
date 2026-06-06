@@ -54,4 +54,13 @@ public class Plano {
         this.duracao = duracao;
     }
 
+    @Override
+    public String toString() {
+        return "Plano{" +
+                "id=" + id_plano +
+                ", nome='" + nome + '\'' +
+                ", valor=" + valor +
+                ", duracao=" + duracao +
+                '}';
+    }
 };

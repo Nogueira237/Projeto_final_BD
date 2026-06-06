@@ -159,4 +159,45 @@ public class PagamentoDAO extends ConnectionDAO {
         return pagamentos;
     };
 
+    public Pagamento selectById(int id) {
+
+        connectToDb();
+
+        String sql = "SELECT * FROM Pagamento WHERE id_pagamento = ?";
+
+        try {
+
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, id);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+                return new Pagamento(
+                        rs.getInt("id_pagamento"),
+                        rs.getDouble("valor"),
+                        rs.getString("data_pagamento"),
+                        rs.getString("pago"),
+                        rs.getInt("Aluno_id_aluno")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar pagamento por ID: " + e.getMessage());
+
+        } finally {
+
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
 };

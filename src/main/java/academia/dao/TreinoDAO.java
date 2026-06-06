@@ -153,4 +153,43 @@ public class TreinoDAO extends ConnectionDAO {
         return treinos;
     };
 
+    public Treino selectById(int id) {
+
+        connectToDb();
+
+        String sql = "SELECT * FROM Treino WHERE id_treino = ?";
+
+        try {
+
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, id);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+                return new Treino(
+                        rs.getInt("id_treino"),
+                        rs.getString("descricao"),
+                        rs.getString("nivel")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar treino por ID: " + e.getMessage());
+
+        } finally {
+
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
 };

@@ -156,4 +156,44 @@ public class InstrutorDAO extends ConnectionDAO {
         return instrutores;
     };
 
+    public Instrutor selectById(int id) {
+
+        connectToDb();
+
+        String sql = "SELECT * FROM Instrutor WHERE id_instrutor = ?";
+
+        try {
+
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, id);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+                return new Instrutor(
+                        rs.getInt("id_instrutor"),
+                        rs.getString("nome"),
+                        rs.getString("especialidade"),
+                        rs.getDouble("salario")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar instrutor por ID: " + e.getMessage());
+
+        } finally {
+
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
 };

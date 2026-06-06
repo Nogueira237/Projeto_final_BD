@@ -53,4 +53,14 @@ public class Instrutor {
     public void setSalario(double salario) {
         this.salario = salario;
     }
+
+    @Override
+    public String toString() {
+        return "Instrutor{" +
+                "id=" + id_instrutor +
+                ", nome='" + nome + '\'' +
+                ", especialidade='" + especialidade + '\'' +
+                ", salario=" + salario +
+                '}';
+    }
 }

@@ -64,4 +64,15 @@ public class Pagamento {
     public void setAluno_id_aluno(int aluno_id_aluno) {
         Aluno_id_aluno = aluno_id_aluno;
     }
+
+    @Override
+    public String toString() {
+        return "Pagamento{" +
+                "id=" + id_pagamento +
+                ", valor=" + valor +
+                ", data='" + data_pagamento + '\'' +
+                ", pago='" + pago + '\'' +
+                ", alunoId=" + Aluno_id_aluno +
+                '}';
+    }
 };

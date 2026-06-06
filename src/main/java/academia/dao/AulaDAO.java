@@ -159,4 +159,45 @@ public class AulaDAO extends ConnectionDAO {
         return aulas;
     };
 
+    public Aula selectById(int id) {
+
+        connectToDb();
+
+        String sql = "SELECT * FROM Aula WHERE id_aula = ?";
+
+        try {
+
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, id);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+                return new Aula(
+                        rs.getInt("id_aula"),
+                        rs.getString("nome"),
+                        rs.getString("horario"),
+                        rs.getInt("capacidade"),
+                        rs.getInt("Instrutor_id_instrutor")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar aula por ID: " + e.getMessage());
+
+        } finally {
+
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
 };

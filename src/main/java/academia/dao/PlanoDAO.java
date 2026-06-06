@@ -153,4 +153,44 @@ public class PlanoDAO extends ConnectionDAO{
         return planos;
     };
 
+    public Plano selectById(int id) {
+
+        connectToDb();
+
+        String sql = "SELECT * FROM Plano WHERE id_plano = ?";
+
+        try {
+
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, id);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+                return new Plano(
+                        rs.getInt("id_plano"),
+                        rs.getString("nome"),
+                        rs.getDouble("valor"),
+                        rs.getInt("duracao")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar plano por ID: " + e.getMessage());
+
+        } finally {
+
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
 };

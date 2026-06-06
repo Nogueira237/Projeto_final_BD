@@ -89,4 +89,17 @@ public class Aluno {
     public void setPlano_id_plano(int plano_id_plano) {
         Plano_id_plano = plano_id_plano;
     }
+
+    @Override
+    public String toString() {
+        return "Aluno{" +
+                "id=" + id_aluno +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", data_nascimento='" + data_nascimento + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", treino=" + Treino_id_treino +
+                ", plano=" + Plano_id_plano +
+                '}';
+    }
 };

@@ -156,4 +156,151 @@ public class AlunoHasAulaDAO extends ConnectionDAO {
         return lista;
     };
 
+    public boolean deleteRelacao(int alunoId, int aulaId) {
+
+        connectToDb();
+
+        String sql = "DELETE FROM Aluno_has_Aula WHERE Aluno_id_aluno = ? AND Aula_id_aula = ?";
+
+        try {
+
+            pst = connection.prepareStatement(sql);
+
+            pst.setInt(1, alunoId);
+            pst.setInt(2, aulaId);
+
+            int rows = pst.executeUpdate();
+
+            return rows > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao remover relação: " + e.getMessage());
+            return false;
+
+        } finally {
+            try {
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public AlunoHasAula selectByIds(int alunoId, int aulaId) {
+
+        connectToDb();
+
+        String sql = "SELECT * FROM Aluno_has_Aula WHERE Aluno_id_aluno = ? AND Aula_id_aula = ?";
+
+        try {
+
+            pst = connection.prepareStatement(sql);
+
+            pst.setInt(1, alunoId);
+            pst.setInt(2, aulaId);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+                return new AlunoHasAula(
+                        rs.getInt("Aluno_id_aluno"),
+                        rs.getInt("Aula_id_aula")
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar relação: " + e.getMessage());
+
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<AlunoHasAula> selectRelacoes() {
+
+        ArrayList<AlunoHasAula> relacoes = new ArrayList<>();
+
+        connectToDb();
+
+        String sql = "SELECT * FROM Aluno_has_Aula";
+
+        try {
+
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+
+                AlunoHasAula relacao = new AlunoHasAula(
+                        rs.getInt("Aluno_id_aluno"),
+                        rs.getInt("Aula_id_aula")
+                );
+
+                relacoes.add(relacao);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar relações: " + e.getMessage());
+
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (st != null) st.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return relacoes;
+    }
+
+    public boolean updateRelacao(int alunoAntigo, int aulaAntiga, int novoAluno, int novaAula) {
+
+        connectToDb();
+
+        String sql = "UPDATE Aluno_has_Aula SET Aluno_id_aluno = ?, Aula_id_aula = ? " +
+                "WHERE Aluno_id_aluno = ? AND Aula_id_aula = ?";
+
+        try {
+
+            pst = connection.prepareStatement(sql);
+
+            // novos valores
+            pst.setInt(1, novoAluno);
+            pst.setInt(2, novaAula);
+
+            // antigos (WHERE)
+            pst.setInt(3, alunoAntigo);
+            pst.setInt(4, aulaAntiga);
+
+            int rows = pst.executeUpdate();
+
+            return rows > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar relação: " + e.getMessage());
+            return false;
+
+        } finally {
+            try {
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
 };

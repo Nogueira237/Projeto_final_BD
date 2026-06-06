@@ -65,4 +65,15 @@ public class Aula {
     public void setInstrutor_id_instrutor(int instrutor_id_instrutor) {
         Instrutor_id_instrutor = instrutor_id_instrutor;
     }
+
+    @Override
+    public String toString() {
+        return "Aula{" +
+                "id=" + id_aula +
+                ", nome='" + nome + '\'' +
+                ", horario='" + horario + '\'' +
+                ", capacidade=" + capacidade +
+                ", instrutor=" + Instrutor_id_instrutor +
+                '}';
+    }
 };
