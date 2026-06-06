@@ -9,7 +9,7 @@ Eduardo Nogueira Belarmino --- 597<br/>
 • Possibilidade de busca por atributos (pelo menos um para cada entidade).<br/>
 Você pode buscar por id, ou mostrar a tabela inteira, vale para todas as tabelas<br/><br/>
 • Pelo menos 3 SELECT com JOIN ao total.<br/>
-Ao selecionar select -> aluno no menu, aparece as opções de:<br/>
+Ao selecionar Mostrar dados -> aluno no menu, aparece as opções de:<br/>
   • Relatório alunos + pagamentos (JOIN)<br/>
   • Relatório alunos + aulas (JOIN)<br/>
   • Relatório completo (JOIN com Aluno + Pagamento + Plano)<br/>
