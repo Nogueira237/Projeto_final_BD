@@ -13,3 +13,8 @@ Ao selecionar Mostrar dados -> aluno no menu, aparece as opções de:<br/>
   • Relatório alunos + pagamentos (JOIN)<br/>
   • Relatório alunos + aulas (JOIN)<br/>
   • Relatório completo (JOIN com Aluno + Pagamento + Plano)<br/>
+  <br/>
+  <br/>
+  <br/>
+O arquivo .sql do projeto se encontra dentro da pasta "sql"
+
